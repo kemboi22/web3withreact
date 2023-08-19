@@ -3,7 +3,7 @@ import {ethers} from "ethers";
 import {contractABI, contractAddress} from "../Utils/Constants.js";
 
 export const TransactionsContext = createContext();
-const { ethereum }  = window
+const {ethereum} = window
 
 const getEthereumContract = async () => {
     const provider = new ethers.BrowserProvider(ethereum)
@@ -14,7 +14,7 @@ const getEthereumContract = async () => {
 
 // eslint-disable-next-line react/prop-types
 export const TransactionProvider = ({children}) => {
-    const [formData, setFormData ] = useState({addressTo: "", amount: "", keyword: "", message: ""})
+    const [formData, setFormData] = useState({addressTo: "", amount: "", keyword: "", message: ""})
     const [currentAccount, setCurrentAccount] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"))
@@ -23,25 +23,24 @@ export const TransactionProvider = ({children}) => {
         setFormData((prevState) => ({...prevState, [name]: e.target.value}))
     }
     const getAllTransactions = async () => {
-      try {
-          if (!ethereum) return alert("Please install Meta mask")
-          const transactionContract = await getEthereumContract()
-          const availableTransactions = await transactionContract.getAllTransactions()
-          const structuredTransactions = availableTransactions.map((transaction) => ({
-              addressTo: transaction.receiver,
-              addressFrom: transaction.sender,
-              timestamp: new Date(parseInt(transaction.timestamp) * 1000).toLocaleString(),
-              message: transaction.message,
-              keyword: transaction.keyword,
-              amount: convertToNumber(transaction.amount)
+        try {
+            if (!ethereum) return alert("Please install Meta mask")
+            const transactionContract = await getEthereumContract()
+            const availableTransactions = await transactionContract.getAllTransactions()
+            const structuredTransactions = availableTransactions.map((transaction) => ({
+                addressTo: transaction.receiver,
+                addressFrom: transaction.sender,
+                timestamp: new Date(parseInt(transaction.timestamp) * 1000).toLocaleString(),
+                message: transaction.message,
+                keyword: transaction.keyword,
+                amount: convertToNumber(transaction.amount)
 
-          }))
-          console.log(structuredTransactions)
-          setTransactions(structuredTransactions)
-      }catch (e){
-          console.log(e)
-          throw new Error("Ethereum Object not Found")
-      }
+            }))
+            setTransactions(structuredTransactions)
+        } catch (e) {
+            console.log(e)
+            throw new Error("Ethereum Object not Found")
+        }
     }
     const convertToNumber = (number) => {
         const weiValue = ethers.getNumber(number)
@@ -52,31 +51,28 @@ export const TransactionProvider = ({children}) => {
         try {
             if (!ethereum) return alert("Install Meta Mask")
             const accounts = await ethereum.request({method: "eth_accounts"})
-            if (accounts.length)
-            {
+            if (accounts.length) {
 
                 setCurrentAccount(accounts[0])
                 await getAllTransactions()
                 // Get All Transactions
-            }else{
+            } else {
                 console.log("No accounts ")
             }
-        }catch (e) {
+        } catch (e) {
             throw new Error("No ethereum Object")
         }
     }
     const checkIfTransactionsExist = async () => {
         try {
-            if (ethereum)
-            {
-                const transactionContract =await getEthereumContract();
+            if (ethereum) {
+                const transactionContract = await getEthereumContract();
                 const transactionCount = await transactionContract.getTransactionCount();
                 window.localStorage.setItem("transactionCount", transactionCount)
             }
-        }catch (e) {
+        } catch (e) {
             console.log(e)
             throw new Error("No Ethereum Object")
-
         }
 
     }
@@ -86,14 +82,13 @@ export const TransactionProvider = ({children}) => {
             if (!ethereum) return alert("Please install metamask")
             const accounts = await ethereum.request({method: "eth_requestAccounts"})
             setCurrentAccount(accounts[0])
-        }catch (e)
-        {
+        } catch (e) {
             console.error(e)
             throw new Error("Now ethereum object")
         }
 
     }
-    useEffect( () => {
+    useEffect(() => {
         checkIfWalletIsConnected()
         checkIfTransactionsExist()
     }, [transactionCount]);
@@ -111,26 +106,27 @@ export const TransactionProvider = ({children}) => {
                     from: currentAccount,
                     to: addressTo,
                     gas: "0x5208",
-                    value: "0x"+parsedAmount.toString(16),
+                    value: "0x" + parsedAmount.toString(16),
                 }]
             })
             const transactionHash = await transactionContract.addToBlockChain(addressTo, parsedAmount, message, keyword)
-            console.log("Loading "+ transactionHash.hash )
+            console.log("Loading " + transactionHash.hash)
             await transactionHash.wait()
             setIsLoading(false)
-            console.log("Success "+ transactionHash.hash )
+            console.log("Success " + transactionHash.hash)
             const transactionCount = await transactionContract.getTransactionCount()
             setTransactionCount(transactionCount)
             window.location.reload()
-        }catch (e) {
+        } catch (e) {
             console.log(e)
             throw new Error("No ethereum Object")
         }
     }
 
     return (
-        <TransactionsContext.Provider value={{connectWallet, currentAccount, formData,  handleChange, sendTransaction, isLoading, transactions}}>
-        {children}
-    </TransactionsContext.Provider>
+        <TransactionsContext.Provider
+            value={{connectWallet, currentAccount, formData, handleChange, sendTransaction, isLoading, transactions}}>
+            {children}
+        </TransactionsContext.Provider>
     )
 }

@@ -1,4 +1,3 @@
-import dummyData from "../Utils/dummyData.js";
 import {useContext} from "react";
 import {TransactionsContext} from "../context/TransactionsContext.jsx";
 import {shortenAddress} from "../Utils/shortenAddress.js";
@@ -29,8 +28,8 @@ const Transactions = () => {
     )
 }
 // eslint-disable-next-line react/prop-types
-const TransactionsCard =  ({ addressTo, addressFrom, timestamp, message, keyword, amount, url }) => {
-    const gifUrl =  useFetch({ keyword });
+const TransactionsCard = ({addressTo, addressFrom, timestamp, message, keyword, amount, url}) => {
+    const gifUrl = useFetch({keyword});
 
     return (
         <div className="bg-[#181918] m-4 flex flex-1
@@ -52,7 +51,7 @@ const TransactionsCard =  ({ addressTo, addressFrom, timestamp, message, keyword
                     <p className="text-white text-base">Amount: {amount} ETH</p>
                     {message && (
                         <>
-                            <br />
+                            <br/>
                             <p className="text-white text-base">Message: {message}</p>
                         </>
                     )}
