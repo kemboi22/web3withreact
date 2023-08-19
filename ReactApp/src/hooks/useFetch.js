@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 
-const API_KEY = "ax4A2sZPkqHq9octls822riXyQeqGyS1";
+// eslint-disable-next-line no-undef
+const API_KEY = import.meta.env.VITE_GIPHY_API_KEY
 export const useFetch = ({keyword}) => {
     const [gifUrl, setGifUrl] = useState("")
     const fetchGifs = async () => {

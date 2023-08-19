@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/ReactApp/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/smartContracts/artifacts" />
+      <excludeFolder url="file://$MODULE_DIR$/smartContracts/cache" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>
