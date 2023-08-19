@@ -2,6 +2,9 @@ import {SiEthereum} from "react-icons/si";
 import {BsInfoCircle} from "react-icons/bs";
 import Loader from "./Loader.jsx";
 import {AiFillPlayCircle} from "react-icons/ai";
+import {useContext} from "react";
+import {TransactionsContext} from "../context/TransactionsContext.jsx";
+import {shortenAddress} from "../Utils/shortenAddress.js";
 
 const companyCommonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 
@@ -11,8 +14,12 @@ const Input = ({placeholder, name, type, value, handleChange}) => (
            className={"my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"}/>
 )
 const Welcome = () => {
-    const submit = () => {
-
+    const {connectWallet, currentAccount, formData,  handleChange, sendTransaction, isLoading} = useContext(TransactionsContext)
+    const submit = (e) => {
+        const {amount, addressTo, keyword, message} = formData;
+        e.preventDefault()
+        if (!amount || !addressTo || !keyword || !message) return
+        sendTransaction()
     }
 
     return (
@@ -25,10 +32,10 @@ const Welcome = () => {
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
                         Explore the crypto world. Buy and sell cryptocurrencies easily on Krypto.
                     </p>
-                    {true && (
+                    {!currentAccount && (
                         <button
                             type="button"
-                            onClick={connectToWallet}
+                            onClick={connectWallet}
                             className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
                         >
                             <AiFillPlayCircle className="text-white mr-2"/>
@@ -69,7 +76,7 @@ const Welcome = () => {
                             </div>
                             <div>
                                 <p className="text-white font-light text-sm">
-                                    xihqohwqiih....0ii
+                                    {shortenAddress(currentAccount)}
                                 </p>
                                 <p className="text-white font-semibold text-lg mt-1">
                                     Ethereum
@@ -85,7 +92,7 @@ const Welcome = () => {
 
                         <div className="h-[1px] w-full bg-gray-400 my-2"/>
 
-                        {false
+                        {isLoading
                             ? <Loader/>
                             : (
                                 <button
@@ -106,7 +113,5 @@ const Welcome = () => {
 const handleChange = () => {
 
 }
-const connectToWallet = () => {
 
-}
 export default Welcome
