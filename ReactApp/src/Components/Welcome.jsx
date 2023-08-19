@@ -110,8 +110,6 @@ const Welcome = () => {
     )
 }
 
-const handleChange = () => {
 
-}
 
 export default Welcome
