@@ -1,10 +1,31 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# WEB 3.0 React
 
-Currently, two official plugins are available:
+This is a web3.0 app wich is used with react and solidity for smart contracts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md)
-  uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast
-  Refresh
+
+
+## Installaction
+
+To install this project.
+Run
+
+```bash
+  npm run deploy
+```
+
+
+```bash
+  cd ReactApp
+  npm i 
+  npm run dev
+```
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+
+API_KEY from Giphy.com
+`VITE_GIPHY_API_KEY` 
+
+
