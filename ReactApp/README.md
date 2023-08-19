@@ -3,7 +3,7 @@
 
 This is a web3.0 app wich is used with react and solidity for smart contracts
 
-
+#### Deployed https://web3react-kemboi.netlify.app/
 
 ## Installaction
 
