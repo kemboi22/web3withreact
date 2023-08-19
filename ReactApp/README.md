@@ -11,11 +11,12 @@ To install this project.
 Run
 
 ```bash
-  npm run deploy
+  git clone https://github.com/kemboi22/web3withreact.git
 ```
 
 
 ```bash
+cd web3withreact
   cd ReactApp
   npm i 
   npm run dev
